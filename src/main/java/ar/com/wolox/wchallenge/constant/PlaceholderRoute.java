@@ -4,7 +4,8 @@ public enum PlaceholderRoute {
 
     ROUTE_SERVICE("https://jsonplaceholder.typicode.com/"),
     USERS("users/"),
-    PHOTOS("photos/");
+    PHOTOS("photos/"),
+    ALBUMS("albums/");
 
     private final String route;
 
