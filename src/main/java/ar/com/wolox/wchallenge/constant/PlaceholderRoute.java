@@ -3,7 +3,8 @@ package ar.com.wolox.wchallenge.constant;
 public enum PlaceholderRoute {
 
     ROUTE_SERVICE("https://jsonplaceholder.typicode.com/"),
-    USERS("users/");
+    USERS("users/"),
+    PHOTOS("photos/");
 
     private final String route;
 
