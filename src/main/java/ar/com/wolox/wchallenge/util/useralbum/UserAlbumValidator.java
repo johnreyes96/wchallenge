@@ -1,5 +1,6 @@
 package ar.com.wolox.wchallenge.util.useralbum;
 
+import ar.com.wolox.wchallenge.dto.UserPermissionToAlbumDTO;
 import ar.com.wolox.wchallenge.exception.DuplicateRegisterException;
 import ar.com.wolox.wchallenge.exception.PermissionNotFoundException;
 import ar.com.wolox.wchallenge.model.UserAlbum;
@@ -79,6 +80,19 @@ public class UserAlbumValidator {
             }
         }
         return userAlbumsPersistedByUserIdAndAlbumId;
+    }
+
+    public List<UserPermissionToAlbumDTO> getUserPermissionToAlbumDTOByAlbumIdAndPermission(List<UserAlbum> allUserAlbum,
+                                                                                            int albumId, String permission) {
+        List<UserPermissionToAlbumDTO> userPermissionToAlbumDTOList = new ArrayList<>();
+        for (UserAlbum userAlbumPersisted : allUserAlbum) {
+            if (userAlbumPersisted.getAlbumId() == albumId
+                    && userAlbumPersisted.getPermission().equals(permission)) {
+                short userId = userAlbumPersisted.getUserId();
+                userPermissionToAlbumDTOList.add(new UserPermissionToAlbumDTO(userId));
+            }
+        }
+        return userPermissionToAlbumDTOList;
     }
 
     public UserAlbum getUserAlbum() {

@@ -1,5 +1,6 @@
 package ar.com.wolox.wchallenge.controller;
 
+import ar.com.wolox.wchallenge.dto.UserPermissionToAlbumDTO;
 import ar.com.wolox.wchallenge.model.UserAlbum;
 import ar.com.wolox.wchallenge.service.useralbumservice.IUserAlbumService;
 import ar.com.wolox.wchallenge.util.useralbum.UserAlbumUtil;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserAlbumController {
 
     public static final String ROUTE = "share_album";
+    public static final String PERMISSION_ALBUM_ID = "/{permission}/{albumId}";
 
     @Autowired
     private IUserAlbumService userAlbumService;
@@ -30,6 +32,12 @@ public class UserAlbumController {
         userAlbum = beforeUpdateUserAlbum(userAlbum);
         List<UserAlbum> userAlbums = UserAlbumUtil.createUserAlbums(userAlbum);
         return userAlbumService.saveUserAlbums(userAlbums);
+    }
+
+    @GetMapping(PERMISSION_ALBUM_ID)
+    public List<UserPermissionToAlbumDTO> getUsersPermissionToAlbumIdAndPermission(@PathVariable int albumId,
+                                                                                   @PathVariable String permission) {
+        return getUserPermissionToAlbumDTOByAlbumIdAndPermission(albumId, permission);
     }
 
     public List<UserAlbum> getAllUserAlbum() {
@@ -56,5 +64,15 @@ public class UserAlbumController {
         List<UserAlbum> userAlbumsToDelete = userAlbumValidator.getUserAlbumsPersistedByUserIdAndAlbumId(allUserAlbum);
         deleteUserAlbumsByUserIdAndAlbumId(userAlbumsToDelete);
         return userAlbumValidator.getUserAlbum();
+    }
+
+    private List<UserPermissionToAlbumDTO> getUserPermissionToAlbumDTOByAlbumIdAndPermission(int albumId,
+                                                                                             String permission) {
+        UserAlbum userAlbum = UserAlbumUtil.createUserAlbumWithOnlyPermission(permission);
+        UserAlbumValidator userAlbumValidator = new UserAlbumValidator(userAlbum);
+        userAlbumValidator.validatePermission();
+        List<UserAlbum> allUserAlbum = getAllUserAlbum();
+        return userAlbumValidator.getUserPermissionToAlbumDTOByAlbumIdAndPermission(allUserAlbum, albumId,
+                userAlbum.getPermission());
     }
 }

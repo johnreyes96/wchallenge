@@ -31,4 +31,10 @@ public class UserAlbumUtil {
         userAlbumRead.setPermission(PermissionEnum.READ.getPermission());
         return userAlbumRead;
     }
+
+    public static UserAlbum createUserAlbumWithOnlyPermission(String permission) {
+        UserAlbum userAlbum = new UserAlbum();
+        userAlbum.setPermission(permission);
+        return userAlbum;
+    }
 }
