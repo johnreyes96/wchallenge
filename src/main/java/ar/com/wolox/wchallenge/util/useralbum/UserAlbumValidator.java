@@ -1,12 +1,10 @@
 package ar.com.wolox.wchallenge.util.useralbum;
 
-import ar.com.wolox.wchallenge.controller.UserAlbumController;
 import ar.com.wolox.wchallenge.exception.DuplicateRegisterException;
 import ar.com.wolox.wchallenge.exception.PermissionNotFoundException;
 import ar.com.wolox.wchallenge.model.UserAlbum;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserAlbumValidator {
@@ -17,12 +15,21 @@ public class UserAlbumValidator {
         this.userAlbum = userAlbum;
     }
 
-    public void validateIfExistUserAlbum(List<UserAlbum> allUserAlbum) {
+    public void validateUserAlbumPersistedToCreate(List<UserAlbum> allUserAlbum) {
         if (existUserAlbum(allUserAlbum)) {
             int userId = this.userAlbum.getUserId();
             int albumId = this.userAlbum.getAlbumId();
             String message = String.format("The user %d already has permissions for album %d", userId, albumId);
             throw new DuplicateRegisterException(message);
+        }
+    }
+
+    public void validateUserAlbumPersistedToUpdate(List<UserAlbum> allUserAlbum) {
+        if (!existUserAlbum(allUserAlbum)) {
+            int userId = this.userAlbum.getUserId();
+            int albumId = this.userAlbum.getAlbumId();
+            String message = String.format("The user %d does not have permissions for album %d", userId, albumId);
+            throw new PermissionNotFoundException(message);
         }
     }
 
@@ -58,6 +65,20 @@ public class UserAlbumValidator {
             return true;
         }
         return false;
+    }
+
+    public List<UserAlbum> getUserAlbumsPersistedByUserIdAndAlbumId(List<UserAlbum> allUserAlbum) {
+        List<UserAlbum> userAlbumsPersistedByUserIdAndAlbumId = new ArrayList<>();
+        for (UserAlbum userAlbumPersisted : allUserAlbum) {
+            if (userAlbumPersisted.getAlbumId() == this.userAlbum.getAlbumId()
+                    && userAlbumPersisted.getUserId() == this.userAlbum.getUserId()) {
+                userAlbumsPersistedByUserIdAndAlbumId.add(userAlbumPersisted);
+                if (userAlbumsPersistedByUserIdAndAlbumId.size() == 2) {
+                    break;
+                }
+            }
+        }
+        return userAlbumsPersistedByUserIdAndAlbumId;
     }
 
     public UserAlbum getUserAlbum() {

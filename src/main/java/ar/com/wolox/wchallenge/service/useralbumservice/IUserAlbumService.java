@@ -9,4 +9,6 @@ public interface IUserAlbumService {
     public List<UserAlbum> getAllUserAlbum();
 
     public List<UserAlbum> saveUserAlbums(List<UserAlbum> userAlbums);
+
+    public void deleteUserAlbums(List<UserAlbum> userAlbums);
 }

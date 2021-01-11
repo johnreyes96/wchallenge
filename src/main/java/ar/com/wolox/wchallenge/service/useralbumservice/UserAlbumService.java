@@ -22,4 +22,9 @@ public class UserAlbumService implements IUserAlbumService {
     public List<UserAlbum> saveUserAlbums(List<UserAlbum> userAlbums) {
         return (List<UserAlbum>) userAlbumDao.saveAll(userAlbums);
     }
+
+    @Override
+    public void deleteUserAlbums(List<UserAlbum> userAlbums) {
+        userAlbumDao.deleteAll(userAlbums);
+    }
 }
