@@ -24,4 +24,12 @@ public class PhotoService {
         PhotoDTO[] response = restTemplate.getForObject(url.toString(), PhotoDTO[].class);
         return Arrays.asList(Objects.requireNonNull(response));
     }
+
+    public List<PhotoDTO> getPhotosByAlbumId(int albumId) {
+        StringBuilder url = new StringBuilder(PlaceholderRoute.ROUTE_SERVICE.getRoute())
+                .append(PlaceholderRoute.PHOTOS_BY_ALBUM_ID.getRoute())
+                .append(albumId);
+        PhotoDTO[] response = restTemplate.getForObject(url.toString(), PhotoDTO[].class);
+        return Arrays.asList(Objects.requireNonNull(response));
+    }
 }

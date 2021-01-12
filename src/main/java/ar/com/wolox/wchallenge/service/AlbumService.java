@@ -24,4 +24,12 @@ public class AlbumService {
         AlbumDTO[] response = restTemplate.getForObject(url.toString(), AlbumDTO[].class);
         return Arrays.asList(Objects.requireNonNull(response));
     }
+
+    public List<AlbumDTO> getAlbumsByUserId(short userId) {
+        StringBuilder url = new StringBuilder(PlaceholderRoute.ROUTE_SERVICE.getRoute())
+                .append(PlaceholderRoute.ALBUMS_BY_USER_ID.getRoute())
+                .append(userId);
+        AlbumDTO[] response = restTemplate.getForObject(url.toString(), AlbumDTO[].class);
+        return Arrays.asList(Objects.requireNonNull(response));
+    }
 }

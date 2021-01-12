@@ -6,7 +6,9 @@ public enum PlaceholderRoute {
     USERS("users/"),
     PHOTOS("photos/"),
     ALBUMS("albums/"),
-    COMMENTS_BY_NAME("comments?name=");
+    COMMENTS_BY_NAME("comments?name="),
+    ALBUMS_BY_USER_ID("albums?userId="),
+    PHOTOS_BY_ALBUM_ID("photos?albumId=");
 
     private final String route;
 
