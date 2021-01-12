@@ -53,7 +53,7 @@ public class UserAlbumValidator {
         this.userAlbum.setPermission(this.userAlbum.getPermission().toUpperCase());
     }
 
-    public void validateIfExistPermission() {
+    private void validateIfExistPermission() {
         if (!existPermission()) {
             String message = String.format("Not exist the permission %s", this.userAlbum.getPermission());
             throw new PermissionNotFoundException(message);
