@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserAlbumValidator {
 
-    private UserAlbum userAlbum;
+    private final UserAlbum userAlbum;
 
     public UserAlbumValidator(UserAlbum userAlbum) {
         this.userAlbum = userAlbum;
@@ -62,10 +62,7 @@ public class UserAlbumValidator {
 
     private boolean existPermission() {
         List<String> permissionsAllowed = UserAlbumUtil.getPermissionsAllowed();
-        if (permissionsAllowed.contains(this.userAlbum.getPermission())) {
-            return true;
-        }
-        return false;
+        return permissionsAllowed.contains(this.userAlbum.getPermission());
     }
 
     public List<UserAlbum> getUserAlbumsPersistedByUserIdAndAlbumId(List<UserAlbum> allUserAlbum) {
@@ -74,9 +71,7 @@ public class UserAlbumValidator {
             if (userAlbumPersisted.getAlbumId() == this.userAlbum.getAlbumId()
                     && userAlbumPersisted.getUserId() == this.userAlbum.getUserId()) {
                 userAlbumsPersistedByUserIdAndAlbumId.add(userAlbumPersisted);
-                if (userAlbumsPersistedByUserIdAndAlbumId.size() == 2) {
-                    break;
-                }
+                if (userAlbumsPersistedByUserIdAndAlbumId.size() == 2) break;
             }
         }
         return userAlbumsPersistedByUserIdAndAlbumId;

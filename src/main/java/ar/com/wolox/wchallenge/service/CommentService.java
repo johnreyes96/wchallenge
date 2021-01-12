@@ -18,10 +18,10 @@ public class CommentService {
         this.restTemplate = restTemplate;
     }
 
-    public List<CommentDTO> getCommentsByName(String value) {
+    public List<CommentDTO> getCommentsByName(String name) {
         StringBuilder url = new StringBuilder(PlaceholderRoute.ROUTE_SERVICE.getRoute())
                 .append(PlaceholderRoute.COMMENTS_BY_NAME.getRoute())
-                .append(value);
+                .append(name);
         CommentDTO[] response = restTemplate.getForObject(url.toString(), CommentDTO[].class);
         return Arrays.asList(Objects.requireNonNull(response));
     }
